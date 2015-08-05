@@ -111,7 +111,6 @@
             $scope.checkPermission=checkPermission;
 
             function checkPermission(){
-
                 dashboardData.myowner($scope.dashboard.title).then(processmyownerresponse);
 
 
@@ -122,7 +121,7 @@
 
                 $scope.owner=data;
                 console.log($scope.owner);
-                if ($scope.owner == $cookies.username || $cookies.username == "admin")
+                if($scope.owner==$cookies.username)
                 {
                     console.log("Yeah you are the owner");
                     configModal();

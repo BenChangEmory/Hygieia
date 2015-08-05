@@ -30,7 +30,7 @@
 
 	<div class="form-group clearfix"
 		ng-class="{'has-error': configForm.gitBranch.$invalid && repoConfig.submitted}"
-		 ng-if="repoConfig.repoOption.name == 'GitHub (public)' || repoConfig.repoOption.name == 'GitHub'">
+		ng-if="repoConfig.repoOption.name == 'GitHub (public)' || repoConfig.repoOption.name == 'GitHub (private)'">
 		<div class="col-sm-push-2 col-sm-8">
 			<label class="modal-label" id="repoLabel">GitHub branch</label> <input
 				type="text" name="gitBranch" class="form-control"
@@ -38,6 +38,34 @@
 
 			<p class="help-block" ng-if="configForm.gitBranch.$error.required">GitHub
 				branch is required</p>
+		</div>
+	</div>
+
+	<div class="form-group clearfix"
+		 ng-class="{'has-error': configForm.username.$invalid && repoConfig.submitted}"
+		 ng-if="repoConfig.repoOption.name == 'GitHub (private)'">
+		<div class="col-sm-push-2 col-sm-8">
+			<label class="modal-label" id="repoLabel">GitHub username</label> <input
+				type="text" name="username" class="form-control"
+				ng-model="repoConfig.username" placeholder="Enter GitHub Username"
+				required>
+
+			<p class="help-block" ng-if="configForm.username.$error.required">GitHub
+				username is required</p>
+		</div>
+	</div>
+
+	<div class="form-group clearfix"
+		 ng-class="{'has-error': configForm.password.$invalid && repoConfig.submitted}"
+		 ng-if="repoConfig.repoOption.name == 'GitHub (private)'">
+		<div class="col-sm-push-2 col-sm-8">
+			<label class="modal-label" id="repoLabel">GitHub password</label> <input
+				type="password" name="password" class="form-control"
+				ng-model="repoConfig.password" placeholder="Enter GitHub Password"
+				required>
+
+			<p class="help-block" ng-if="configForm.password.$error.required">GitHub
+				password is required</p>
 		</div>
 	</div>
 

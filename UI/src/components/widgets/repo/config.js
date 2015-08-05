@@ -14,8 +14,11 @@
 		var widgetConfig = modalData.widgetConfig;
 
 		ctrl.repoOptions = [ {
-			name: 'GitHub',
-			value: 'GitHub'
+			name : 'GitHub (public)',
+			value : 'GitHub (public)'
+		}, {
+			name : 'GitHub (private)',
+			value : 'GitHub (private)'
 		}, {
 			name : 'Subversion',
 			value : 'Subversion'
@@ -37,7 +40,6 @@
 		collectorData.collectorsByType('scm').then(processCollectorsResponse);
 
 		function processCollectorsResponse(data) {
-			console.log(data);
 			ctrl.collectors = data;
 		}
 
@@ -63,7 +65,7 @@
 					createCollectorItem(url3, repoType, ctrl.gitBranch).then(
 							processCollectorItemResponse);
 				} else {
-					createCollectorItem(url, repoType.name, ctrl.gitBranch).then(
+					createCollectorItem(url, repoType, ' ').then(
 							processCollectorItemResponse);
 				}
 			}
@@ -77,27 +79,25 @@
 		 * collectorData.createCollectorItem(item); }
 		 */
 
-		function createCollectorItem(url, repoTypeName, branch) {
+		function createCollectorItem(url, repoType, branch) {
 			var item = {};
-			console.log(repoTypeName);
-			console.log(branch);
-
-			if (repoTypeName.indexOf("GitHub") != -1) {
-
+			if (repoType.indexOf('GitHub') != -1) {
 				item = {
-					collectorId: _.findWhere(ctrl.collectors, {name: 'GitHub'}).id,
-					options: {
-						url: url,
-						branch: branch
+					collectorId : _.findWhere(ctrl.collectors, {
+						name : repoType
+					}).id,
+					options : {
+						url : url,
+						branch : branch
 					}
 				};
 			} else {
 				item = {
 					collectorId : _.findWhere(ctrl.collectors, {
-						name: repoTypeName
+						name : repoType
 					}).id,
-					options: {
-						url: url
+					options : {
+						url : url
 					}
 				};
 			}

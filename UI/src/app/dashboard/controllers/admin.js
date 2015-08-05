@@ -8,26 +8,11 @@
         .module('devops-dashboard')
         .controller('AdminController', AdminController);
 
-
-    AdminController.$inject = ['dashboardData', '$cookies', '$cookieStore', '$location'];
-    function AdminController(dashboardData, $cookies, $cookieStore, $location) {
+    AdminController.$inject = ['dashboardData'];
+    function AdminController(dashboardData) {
         var ctrl = this;
 
-        console.log("I am in admin page run scope");
-        if ($cookies.username == 'admin') {
-            console.log("I am admin");
-            $location.path('/admin');
-
-        }
-        else {
-            console.log("Not authenticated redirecting");
-            $location.path('#');
-        }
-
         ctrl.storageAvailable = localStorageSupported;
-        ctrl.templateUrl = "app/dashboard/views/navheader.html";
-        ctrl.username = $cookies.username;
-        ctrl.logout = logout;
 
         // list of available themes. Must be updated manually
         ctrl.themes = [
@@ -64,13 +49,6 @@
         // request dashboards
         dashboardData.search().then(processResponse);
 
-
-        //implementation of logout
-        function logout() {
-            $cookieStore.remove("username");
-            $cookieStore.remove("authenticated");
-            $location.path("/");
-        }
 
         // method implementations
         function applyTheme(filename) {

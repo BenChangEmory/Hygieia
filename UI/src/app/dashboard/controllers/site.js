@@ -8,34 +8,24 @@
         .module('devops-dashboard')
         .controller('SiteController', SiteController);
 
-    SiteController.$inject = ['$scope', '$modal', 'dashboardData', '$location', '$cookies', '$cookieStore', '$timeout'];
-    function SiteController($scope, $modal, dashboardData, $location, $cookies, $cookieStore, $timeout) {
+    SiteController.$inject = ['$scope', '$modal', 'dashboardData', '$location', '$cookies','$cookieStore'];
+    function SiteController($scope, $modal, dashboardData, $location, $cookies,$cookieStore) {
         var ctrl = this;
 
         // public variables
         ctrl.search = '';
-        ctrl.myadmin = '';
         ctrl.username=$cookies.username;
-        ctrl.showAuthentication = $cookies.authenticated;
+        console.log("Setting navbar username as"+ctrl.username);
 
 
-        //   ctrl.dashboards = []; //don't default since it's used to determine loading
-        // ctrl.mydash = [];
+
+        // ctrl.dashboards = []; don't default since it's used to determine loading
+
         // public methods
         ctrl.createDashboard = createDashboard;
-        ctrl.deleteDashboard = deleteDashboard;
         ctrl.open = open;
         ctrl.logout= logout;
-        ctrl.admin = admin;
         ctrl.templateUrl = "app/dashboard/views/navheader.html";
-        ctrl.filterNotOwnedList = filterNotOwnedList;
-
-
-
-        if (ctrl.username === 'admin') {
-            ctrl.myadmin = true;
-        }
-
 
 
         // request dashboards
@@ -44,10 +34,6 @@
         //find dashboard I own
         dashboardData.mydashboard(ctrl.username).then(processDashResponse);
 
-        function admin() {
-            console.log("sending to admin page");
-            $location.path("/admin");
-        }
 
         function logout()
         {
@@ -95,36 +81,5 @@ $cookieStore.remove("username");
 
         }
 
-
-        function deleteDashboard(id) {
-            dashboardData.delete(id).then(function () {
-                _.remove(ctrl.dashboards, {id: id});
-                _.remove(ctrl.mydash, {id: id});
-            });
-        }
-
-        function filterNotOwnedList(db1, db2) {
-
-            console.log("size before is:" + db1.length);
-
-            var jointArray = db1.concat(db2);
-
-            console.log("size after is:" + jointArray.length);
-
-            var uniqueArray = jointArray.filter(function (elem, pos) {
-                return jointArray.indexOf(elem) == pos;
-            });
-
-            console.log("size after reduction  is:" + uniqueArray.length);
-            ctrl.dashboards = uniqueArray;
-
-        };
-
-
-
     }
-
-
 })();
-
-

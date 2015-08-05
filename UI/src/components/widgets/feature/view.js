@@ -11,6 +11,7 @@
 		var ctrl = this;
 		var today = new Date(_.now());
 		var filterTeamId = $scope.widgetConfig.options.teamId;
+
 		ctrl.teamName = $scope.widgetConfig.options.teamName;
 		ctrl.sprintName = null;
 		ctrl.daysTilEnd = null;
